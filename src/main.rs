@@ -11,6 +11,7 @@ use reqwest;
 use dotenv::dotenv;
 
 fn main() -> io::Result<()> {
+    // TODO: сделать так чтобы можно было запускать с флагами из командной строки
     let start_time: Instant = Instant::now();
     println!("Started!");
     dotenv().expect("please create .env file!");

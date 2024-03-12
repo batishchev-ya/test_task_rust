@@ -22,13 +22,10 @@ fn main() -> io::Result<()> {
     let dirname: &String = &env::var("DIRNAME").expect("Please provide DIRNAME env var!");
     create_directory_if_not_exists(dirname)?;
     let processed_urls: Arc<Mutex<HashSet<&String>>> = Arc::new(Mutex::new(HashSet::new()));
-    // let mut processed_urls: HashSet<String> = HashSet::new();
     let urls: Vec<String> = read_urls(input_filename)?;
     urls.par_iter().enumerate().for_each(  |(line_number, url)| {
         let mut processed_urls_inner = processed_urls.lock().unwrap();
-        // println!("{}",processed_urls_inner);
         if !processed_urls_inner.contains(url) {
-            // drop(processed_urls_inner);
             let start_time_thread: Instant = Instant::now();
             if let Err(err) = download_file(url, &(line_number as i32), dirname) {
                 eprintln!("Error downloading file from {}: {}", url, err);
